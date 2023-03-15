@@ -1,0 +1,41 @@
+version: "3.9"
+
+services:
+  rabbit:
+    image: rabbitmq:3-management
+    hostname: my-rabbit
+    container_name: rabbit
+    ports:
+      - 5672:5672
+      - 15672:15672
+  pong:
+    image: pong_service
+    build:
+      dockerfile: Pong/Dockerfile
+      context: .
+      target: runner
+    depends_on:
+      - rabbit
+    expose:
+      - 8081
+    ports:
+      - "8081:8081"
+    volumes:
+      - .:/opt/app
+    restart: always
+  ping:
+    image: ping_service
+    build:
+      dockerfile: Ping/Dockerfile
+      context: .
+      target: runner
+    depends_on:
+      - rabbit
+      - pong
+    expose:
+      - 8082
+    ports:
+      - "8082:8082"
+    volumes:
+      - .:/opt/app
+    restart: always
