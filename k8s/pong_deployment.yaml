@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pong-deployment
+  labels:
+    app: k8s-app
+spec:
+  selector:
+    matchLabels:
+      app: k8s-pong-app
+  template:
+    metadata:
+      labels:
+        app: k8s-pong-app
+    spec:
+      containers:
+        - name: pong-app
+          image: ghostfed/pong_service
+          ports:
+            - containerPort: 8082

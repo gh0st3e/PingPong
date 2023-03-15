@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: pong
+spec:
+  selector:
+    app: k8s-pong-app
+  ports:
+    - name: http
+      port: 8082
+      targetPort: 8082
+  type: NodePort

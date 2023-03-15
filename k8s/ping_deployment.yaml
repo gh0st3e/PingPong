@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ping-deployment
+  labels:
+    app: k8s-app
+spec:
+  selector:
+    matchLabels:
+      app: k8s-ping-app
+  template:
+    metadata:
+      labels:
+        app: k8s-ping-app
+    spec:
+      containers:
+        - name: ping-app
+          image: ghostfed/ping_service
+          ports:
+            - containerPort: 8081
